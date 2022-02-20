@@ -2,37 +2,49 @@
 
 using namespace std;
 
-bool isPallindromeWithRemoval(string str,int length){
-    bool flag = true;
-    int removal=1;
-    int start =0,end=length-1;
-    while(start<=end){
-        if(str[start]==str[end]){
+bool isPallindromeWithRemoval(string str) {
+    int length = str.length();
+    int start = 0, end = length - 1;
+    while (start < end) {
+        if (str[start] == str[end]) {
             start++;
             end--;
+            continue;
         }
-        else{
-            if(removal==1 && str[start+1]==str[end]){
-                removal=0;
-                start++;
+        int left = start + 1;
+        int right = end;
+        while (left < right) {
+            if (str[left] == str[right]) {
+                left++;
+                right--;
+                continue;
             }
-            else if(removal==1 && str[start]==str[end-1]){
-                removal=0;
-                end--;
-            }
-            else if (removal==0){
-                flag=false;
-                break;
-            }
+            break;
         }
+        if (left >= right) {
+            return true;
+        }
+        left = start;
+        right = end - 1;
+        while (left < right) {
+            if (str[left] == str[right]) {
+                left++;
+                right--;
+                continue;
+            }
+            break;
+        }
+        if (left >= right) {
+            return true;
+        }
+        return false;
     }
-    return flag;
+    return true;
 }
 
-int main()
-{
+int main() {
     string str;
-    cin>>str;
-    cout<<isPallindromeWithRemoval(str,str.length());
+    cin >> str;
+    cout << isPallindromeWithRemoval(str);
     return 0;
 }
